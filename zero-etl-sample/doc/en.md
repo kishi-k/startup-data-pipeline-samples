@@ -1,8 +1,5 @@
 ## Getting started
 
-[English](./doc/en)
-[日本語](./doc/ja)
-
 [📣**CAUTION**📣]   
 If Zero-ETL integration has been enabled, the 8 RPU (minimum RPU) will be occupied, and the billing will be approximately $3 USD/hour. PLEASE UPDATE Zero-ETL Interval with `REFRESH_INTERVAL` describing bellow.
 

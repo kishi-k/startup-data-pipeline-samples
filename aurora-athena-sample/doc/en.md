@@ -85,17 +85,17 @@ You can update the data difference by changing the 'mode' parameter to `diff` an
 }
 ```
 
-### Setup visualisations on Amazon QuickSight
+## Setup visualisations on Amazon QuickSight
 
 WIP
 
-### The case of changing the condition of extracting data
+## The case of changing the condition of extracting data
 WIP
 
-### The case of adding the data process
+## The case of adding the data process
 WIP
 
-### Destroy environment
+## Destroy environment
 
 1. Delete the bucket where the outputs of quering on athena was saved
 Open the Amazon S3 Service page from Management console, select the bucket starting with `AthenaQueryResultBucket` , and click `Empty`

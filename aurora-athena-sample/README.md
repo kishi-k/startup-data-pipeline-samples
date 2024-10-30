@@ -65,9 +65,9 @@ Appoximatery monthly cost: **563.244 USD**
 |---|---|---|
 |S3 Export|36 USD| 100GB × 0.012(USD/GB)× 30 (days)|
 |Glue Crawler|2.244 USD|0.44(USD/hour) / 6 (USD/10min) ×　30 (days)|
-|Glue Catalog|Free|Glue Catalog: 10(人) × 10(Query/day) × 30(days) < Free Tier due to less than 1M access|
-|Athena|495 USD|0.033(TB) × 5(USD) × 10(人) × 10(Query/day) × 30(days)|
-|QuickSight|30USD|3(USD) × 10(人)|
+|Glue Catalog|Free|Glue Catalog: 10(person) × 10(Query/day) × 30(days) < Free Tier due to less than 1M access|
+|Athena|495 USD|0.033(TB) × 5(USD) × 10(person) × 10(Query/day) × 30(days)|
+|QuickSight|30USD|3(USD) × 10(person)|
 
 ## Getting started
 
