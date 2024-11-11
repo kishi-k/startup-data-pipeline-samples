@@ -22,6 +22,6 @@ This repo is the examples of Data Pipeline Platform on AWS for Startups. Mainly,
 Please refer other milestones to the Issues.
 
 ## Licence
-This library is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file.
+This library is licensed under the MIT-0 License. See the [LICENSE](./LICENSE) file.
 
 
