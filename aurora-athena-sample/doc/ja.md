@@ -18,6 +18,7 @@
 |snapshotS3BucketName|S3Exportおよび実データの出力バケット|必須|
 |s3ExportPrefix|S3Exportのデータ出力先パス|必須|
 |enableBackupExportedData|S3 Exportにて出力されたRDSのデータの保存の有効化フラグ|必須|
+|loadSchedule|RDSからのデータのロード頻度|必須|
 
 
 ※ デフォルトの差分抽出のロジックは、レコードごとに定義されているタイムスタンプに対して、実行時間から指定期間に当てはまるタイムスタンプを抽出して出力します。（もし列名を指定しない場合はデータ更新がスキップされます）
@@ -39,7 +40,7 @@ cdk deploy --all
    5. デプロイ時に出力されたパラメーターを利用して、以下のコマンドを入力します 
 
     ```
-    mysql -h <ZeroETLRDSStack.DBClusterHostname> -u admin -p
+    mysql -h <SampleDataSourceStack.DBClusterHostname> -u admin -p
     ```
     パスワード入力が求められるので、パスワードを入力します。
 

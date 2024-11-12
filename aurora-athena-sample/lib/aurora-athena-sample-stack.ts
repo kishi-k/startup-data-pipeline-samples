@@ -57,6 +57,11 @@ export interface AthenaPipelineStackProps extends StackProps {
    */
   readonly schemaName: string;
 
+  /**
+   * The schedule of loading data.
+   */
+  readonly loadSchedule: any;
+
 };
 
 export class AthenaPipelineStack extends Stack {
@@ -502,7 +507,7 @@ export class AthenaPipelineStack extends Stack {
     });
 
     new events.Rule(this, 'ScheduleRule', {
-      schedule: events.Schedule.cron({ minute: '0', hour: '2', }),
+      schedule: events.Schedule.cron(props.loadSchedule),
       targets: [sfnTarget],
     });
 
