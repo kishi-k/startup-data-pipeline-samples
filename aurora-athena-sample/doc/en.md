@@ -1,6 +1,6 @@
 # Getting Started 
 
-1. (If you use sample data) Create a bucket on S3, and upload the txt file from the unzipped `sample/sample.tar.gz` file.  
+1. (If you use sample data) Create a bucket on S3, and upload the txt file from the unzipped `startup-data-pipeline-samples/sampledata/sample.tar.gz` file.  
 ※ DO NOT create the snapshot bucket because it is created automatically
 
 2. Update the parameters in the `config/config.ts` file.

@@ -1,7 +1,7 @@
 
 # 構築手順
 
-1. (サンプルデータを利用する場合) S3に任意のバケットを作成し、`sample/sample.tar.gz`　を解答した .txt　ファイルをS3にアップロードします。
+1. (サンプルデータを利用する場合) S3に任意のバケットを作成し、`startup-data-pipeline-samples/sampledata/sample.tar.gz`　を解凍した .txt　ファイルをS3にアップロードします。
 ※ snapshot用のバケットは自動で作成されるので、作成しないでください。
 
 2. `config/config.ts`のStackのProps上のパラメーターを更新する。
