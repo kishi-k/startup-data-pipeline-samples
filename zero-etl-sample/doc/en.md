@@ -3,7 +3,7 @@
 [📣**CAUTION**📣]   
 If Zero-ETL integration has been enabled, the 8 RPU (minimum RPU) will be occupied, and the billing will be approximately $3 USD/hour. PLEASE UPDATE Zero-ETL Interval with `REFRESH_INTERVAL` describing bellow.
 
-1. (If you use the sample data) Create the bucket and upload  `.txt` files from `sql/sampledata` unzipped.
+1. (If you use the sample data) Create the bucket and upload  `.txt` files from `startup-data-pipeline-samples/sampledata/sample.tar.gz` unzipped.
 2. (Option) If you create a Redshift resource with Management console, create at this step.
    1. Create network resources (VPC, Private Subnet, SecurityGroup)
         NOTE: A private subnet is required in this sample (in the case that you create RDS Cluster with this CDK)

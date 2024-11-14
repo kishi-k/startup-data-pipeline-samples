@@ -1,7 +1,7 @@
 
 ## 構築手順
 
-1. (サンプルデータを利用する場合) S3に任意のバケットを作成し、`sql/sampledata.tar.gz`　を解答した `.txt`　ファイルをS3にアップロードします。
+1. (サンプルデータを利用する場合) S3に任意のバケットを作成し、`startup-data-pipeline-samples/sampledata/sample.tar.gz`　を解凍した `.txt`　ファイルをS3にアップロードします。
 2. （Option）Redshiftを手動でConsole上で構築する場合は、このタイミングで作成します。
    1. VPC、Private Subnet、SecurityGroupなど基本的なネットワークリソースを作成する  
         ※ 本サンプルでAuroraを構築する場合、**PrivateSubnetが必須になりますので事前に作成してください。**  
