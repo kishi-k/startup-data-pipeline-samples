@@ -5,9 +5,11 @@
 This repo is the examples of Data Pipeline Platform on AWS for Startups. Mainly, the example that syncing to DWH from RDS and visualize with BI. 
 
 ## 構成パターン
-* [Athenaを利用した簡易データ基盤](./aurora-athena-sample)
-* [Zero-ETLとRedshiftを利用したデータ基盤](./zero-etl-sample/)
-* [WIP] [Trocco](https://trocco.io/)を用いた簡易統合データ分析基盤
+![img](./doc/image1.png)
+
+* [AWS完結の簡易データ基盤](./aurora-athena-sample)
+* [AWS完結のDWHベース基盤](./zero-etl-sample/)
+* [TROCCO](https://trocco.io/)を用いた[統合簡易データ基盤](./trocco-athena-sample/)
 * [WIP] DuckDBをベースとしたサンプル
 
 その他マイルストーンはIssuesを参考にしてください。
@@ -16,7 +18,7 @@ This repo is the examples of Data Pipeline Platform on AWS for Startups. Mainly,
 ## The cases
 * [The low cost pipeline with athena](./aurora-athena-sample)
 * [The data warehouse case with Redshift and Zero ETL](./zero-etl-sample/)
-* [WIP] The integrastion from SaaS case with [Trocco](https://trocco.io/)
+* [The integrastion](./trocco-athena-sample/) from SaaS case with [TROCCO](https://trocco.io/)
 * [WIP] The sample with DuckDB
 
 Please refer other milestones to the Issues.
