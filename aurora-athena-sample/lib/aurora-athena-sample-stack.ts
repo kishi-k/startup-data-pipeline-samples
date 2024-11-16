@@ -57,6 +57,11 @@ export interface AthenaPipelineStackProps extends StackProps {
    */
   readonly schemaName: string;
 
+  /**
+   * The schedule of loading data.
+   */
+  readonly loadSchedule: any;
+
 };
 
 export class AthenaPipelineStack extends Stack {
@@ -232,17 +237,18 @@ export class AthenaPipelineStack extends Stack {
     const masterRecrawlPolicyProperty: glue.CfnCrawler.RecrawlPolicyProperty = {
       recrawlBehavior: 'CRAWL_NEW_FOLDERS_ONLY',
     };
+
+    const targets = props.targetTables.map(table => {
+      return {
+        path: `${bucket.bucketName}/${props.dbName}/${table["table_name"]}`,
+        exclusions: ['**.json'],
+      }
+    })
     const masterDataCrawler = new glue.CfnCrawler(this, "MasterDataCrawler", {
       name: props.pipelineName + "-master-crawler",
       role: snapshotExportGlueCrawlerRole.roleArn,
       targets: {
-        s3Targets: [
-          {
-            path: `${bucket.bucketName}/${props.dbName}`,
-            exclusions: ['**.json'],
-
-          },
-        ]
+        s3Targets:targets
       },
       databaseName: props.pipelineName.replace(/[^a-zA-Z0-9_]/g, "_"),
       configuration: crawconfjson,
@@ -502,7 +508,7 @@ export class AthenaPipelineStack extends Stack {
     });
 
     new events.Rule(this, 'ScheduleRule', {
-      schedule: events.Schedule.cron({ minute: '0', hour: '2', }),
+      schedule: events.Schedule.cron(props.loadSchedule),
       targets: [sfnTarget],
     });
 

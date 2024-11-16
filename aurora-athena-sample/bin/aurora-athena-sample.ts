@@ -25,5 +25,6 @@ new AthenaPipelineStack(app, 'AuroraAthenaSampleStack', {
   dbName: config.dbName,
   schemaName: config.schemaName,
   targetTables: config.tables,
-  enableSaveExportedData: config.enableBackupExportedData
+  enableSaveExportedData: config.enableBackupExportedData,
+  loadSchedule: config.loadSchedule
 });

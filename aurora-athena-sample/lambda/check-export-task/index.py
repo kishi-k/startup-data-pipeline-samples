@@ -18,6 +18,16 @@ def handler(event, context):
     )
 
     logger.debug(resp)
-    logger.info(f'jedge: {resp["ExportTasks"][0]["Status"] == "COMPLETE"}')
 
-    return resp["ExportTasks"][0]["Status"] == "COMPLETE"
+    if len(resp['ExportTasks']) == 0:
+        logger.error(f'Export tasks was not founded.')
+        return False
+
+    if 'FailureCause' in resp["ExportTasks"][0]:
+        raise Exception(resp["ExportTasks"][0]['FailureCause'])
+    
+    if 'Status' in resp["ExportTasks"][0]:
+        logger.info(f'jedge: {resp["ExportTasks"][0]["Status"] == "COMPLETE"}')
+        return resp["ExportTasks"][0]["Status"] == "COMPLETE"
+    else:
+        return False

@@ -8,7 +8,8 @@ type Config = {
     sampleDataBucketName: string,
     snapshotS3BucketName: string,
     s3ExportPrefix: string,
-    enableBackupExportedData: boolean
+    enableBackupExportedData: boolean,
+    loadSchedule: any // refer to Eventbridge cron format (https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-scheduled-rule-pattern.html)
 
 }
 export const config: Config = {
@@ -35,7 +36,6 @@ export const config: Config = {
         },
         {
             table_name: "date",
-            condition: "caldate"
         },
         {
             table_name: "users"
@@ -47,5 +47,6 @@ export const config: Config = {
     sampleDataBucketName:"sample-ticket-data-bucket",
     snapshotS3BucketName: "sample-snapshot-bucket", 
     s3ExportPrefix: "s3export",
-    enableBackupExportedData:true
+    enableBackupExportedData:true,
+    loadSchedule: {minute:'30', hour:'3', weekDay:'MON-FRI', month:'*', year:'*'}
 }

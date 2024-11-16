@@ -13,10 +13,11 @@
 |dbName|The name of database|Yes|
 |schemaName|The name of schema|Yes|
 |tables|The name of tables, and the columns containing timestamp for extracting difference from before.(※)|Yes|
-|sampleDataBucketName|The bucket where the sample data for RDS is uploaded |Yes|
+|sampleDataBucketName|The bucket where the sample data for RDS is uploaded. |Yes|
 |snapshotS3BucketName|The bucket where the snapshot data is saved. |Yes|
 |s3ExportPrefix|The path where the data is exported. |Yes|
-|enableBackupExportedData|The flag for saving RDS data created by S3 export|Yes|
+|enableBackupExportedData|The flag for saving RDS data created by S3 export. |Yes|
+|loadSchedule|The interval of loading data from RDS. |Yes|
 
 
 ※ The default process of extracting differences from the previous data is to export data from the execution time to the defined range time.
