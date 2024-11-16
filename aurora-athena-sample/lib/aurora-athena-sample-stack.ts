@@ -210,7 +210,7 @@ export class AthenaPipelineStack extends Stack {
     const crawlconf = {
       "Version": 1.0,
       "CrawlerOutput": {
-        "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" },
+        "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" }
       }
     }
     const crawconfjson = JSON.stringify(crawlconf);

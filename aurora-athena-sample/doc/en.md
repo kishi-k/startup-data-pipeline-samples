@@ -24,12 +24,12 @@
 
 Please also refer the example of the paramters to  `config/config.ts` file.
 
-1. Run cdk command.
+3. Run cdk command.
 ```
 cdk deploy --all
 ```
 
-1. (If you create the Aurora cluster with this sample.) Upload the sample data. 
+4. (If you create the Aurora cluster with this sample.) Upload the sample data. 
    1. Access RDS from EC2. Open EC2 Service page on Management Console, select instance name starting with `SampleDataSourceStack`, and click "Connect".
    2.  In this sample, you can access by SessionManager. Select SessionManager tab and click "Connect". You will be able to access EC2 console.
    3.  The password of database is save in Secret Manager. Access the page of Secret Manager Service and click the secret desplayed as the name exported from the Outputs as `SampleDataSourceStack.RdsCredentialPath`.
