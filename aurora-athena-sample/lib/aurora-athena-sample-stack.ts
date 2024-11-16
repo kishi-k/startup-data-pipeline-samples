@@ -210,7 +210,7 @@ export class AthenaPipelineStack extends Stack {
     const crawlconf = {
       "Version": 1.0,
       "CrawlerOutput": {
-        "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" }
+        "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" },
       }
     }
     const crawconfjson = JSON.stringify(crawlconf);
@@ -237,17 +237,18 @@ export class AthenaPipelineStack extends Stack {
     const masterRecrawlPolicyProperty: glue.CfnCrawler.RecrawlPolicyProperty = {
       recrawlBehavior: 'CRAWL_NEW_FOLDERS_ONLY',
     };
+
+    const targets = props.targetTables.map(table => {
+      return {
+        path: `${bucket.bucketName}/${props.dbName}/${table["table_name"]}`,
+        exclusions: ['**.json'],
+      }
+    })
     const masterDataCrawler = new glue.CfnCrawler(this, "MasterDataCrawler", {
       name: props.pipelineName + "-master-crawler",
       role: snapshotExportGlueCrawlerRole.roleArn,
       targets: {
-        s3Targets: [
-          {
-            path: `${bucket.bucketName}/${props.dbName}`,
-            exclusions: ['**.json'],
-
-          },
-        ]
+        s3Targets:targets
       },
       databaseName: props.pipelineName.replace(/[^a-zA-Z0-9_]/g, "_"),
       configuration: crawconfjson,

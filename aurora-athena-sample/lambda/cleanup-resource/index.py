@@ -27,7 +27,7 @@ def handler(event, context):
         else:
             response = s3.list_objects_v2(Bucket=S3_BUCKET, Prefix=f'{S3_EXPORT_PREFIX}/{identifer}/', ContinuationToken=next_token)
 
-        if not'Contents' in response:
+        if not 'Contents' in response:
             break
         
         keys = [d['Key'] for d in response['Contents']]
@@ -49,6 +49,12 @@ def handler(event, context):
     tables = glue.get_tables(DatabaseName=DB_NAME.replace("-", "_"))
     
     for table in tables["TableList"]:
+        if 'Parameters' not in table:
+            logging.debug(f'skip delete table{table} due to none parameters')
+            continue
+        if 'UPDATED_BY_CRAWLER' not in table['Parameters']:
+            logging.debug(f'skip delete table{table} due to none  UPDATED_BY_CRAWLER')
+            continue
         if table['Parameters']['UPDATED_BY_CRAWLER'] == S3_EXPORT_CRAWLER:
             glue.delete_table(Name=table['Name'], DatabaseName=DB_NAME.replace("-", "_"))
 
