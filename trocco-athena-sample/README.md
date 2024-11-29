@@ -31,3 +31,22 @@
 
 [こちら](./doc/ja.md)を参照してください
 
+
+<br>  
+<br>
+
+
+This sample provides casual integrated analyze architecrure with Athena & TROCCO (powered by PrimeNumber, AWS Partner) 
+
+
+## Architecture 
+![image](./doc/image/arch.jpg)
+
+
+1. The data from Google analytics and Amazon Aurora integrate using TROCCO
+2. Run query transporting data in TROCCO for quering from BI tools. 
+3. Vizualize the data with Amazon QuickSight.
+
+## Getting started 
+
+Please refer [here](./doc/en.md)

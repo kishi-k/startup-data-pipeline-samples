@@ -1,8 +1,8 @@
 # Getting started
 
-## (Auroraを新規作成する場合)　Amazon Auroraのセットアップ
+## AWS側のリソースの作成
 
-1. S3に任意のバケットを作成し、`startup-data-pipeline-samples/sampledata/sample.tar.gz`　を解凍した .txt　ファイルをS3にアップロードします。
+1. （サンプル用のAmazon Aurora Clusterを立てる場合）S3に任意のバケットを作成し、`startup-data-pipeline-samples/sampledata/sample.tar.gz`　を解凍した .txt　ファイルをS3にアップロードします。
 2. TROCCOの画面を開き、接続情報をクリックし、接続先情報の作成＞Amazon S3を選択します
    1. 画面上部に記載されているIPアドレスの一覧を控えます
    ![img](./image/image1.png)
@@ -17,8 +17,7 @@
 |troccoExternalId|TROCCO側環境の外部ID|必須|
 |sampleDataBucket|サンプルデータを格納するためのバケット名|必須|
 |troccoTargetBucket|TROCCOの転送先となるバケット名|必須|
-
-
+|isExistDB|既存のAmazon Aurora Clusterの有無|必須|
 
 4. cdkのコマンドを実行する
 
@@ -26,7 +25,7 @@
 cdk deploy --all
 ```
 
-5. サンプルデータを取り込みます。
+5. （サンプル用のAmazon Aurora Clusterを立てる場合）サンプルデータを取り込みます。
    1. EC2からRDSへのアクセスを行います。Management Console上でEC2のサービスページを開き、`AuroraTroccoSampleStack`から始まるインスタンス名を選択し、”Connect”をクリックします
    2. 本サンプルではSessionManagerからアクセスできるようになっています。SessionManagerタブを選択して、Connectします
    3. データベースのパスワードはSecretManagerに保存されています。Management Console上でSecretManagerのサービスページにアクセスし、デプロイ時の出力されたパラメーターのうち `AuroraTroccoSampleStack.RdsCredentialPath` で出力されているSecret名をクリックします
@@ -60,10 +59,9 @@ https://documents.trocco.io/docs/data-source-google-analytics4
    2. テーブルは、任意のテーブル名を入力してください
    3. テーブルがすでに存在した場合の動作は、Deleteにすることで更新ごとに全更新することができます
 ![img](./image/image6.png)
-
-1. 完了したら、「確認画面へ」に進み、「保存して適用」をクリックしてください。これてTROCCOの設定は完了です。 
-2. 実際にAthenaでクエリできるか確認しましょう。手順6に進むと、転送設定の画面に移るので、実行を押下しジョブを実行します。
-3. 完了したら、AWSのマネジメントコンソール上でAmazon Athenaを開きます。該当のテーブルが作成され、クエリできることを確認しましょう。
+6. 完了したら、「確認画面へ」に進み、「保存して適用」をクリックしてください。これてTROCCOの設定は完了です。 
+7. 実際にAthenaでクエリできるか確認しましょう。手順6に進むと、転送設定の画面に移るので、実行を押下しジョブを実行します。
+8. 完了したら、AWSのマネジメントコンソール上でAmazon Athenaを開きます。該当のテーブルが作成され、クエリできることを確認しましょう。
 ![img](./image/image7.png)
 
 ### Amazon Auroraの設定を行う
