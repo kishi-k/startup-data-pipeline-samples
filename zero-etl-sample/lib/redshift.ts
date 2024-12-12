@@ -19,17 +19,15 @@ export class RedshiftStack extends Stack {
     readonly redshiftNameSpaceId: string;
     readonly redshiftWorkspaceName: string;
     readonly vpc: ec2.IVpc;
-    constructor(scope: Construct, id: string, props?: RedshiftStackProps) {
-        super(scope, id, props);
 
-        const ACCOUNT_ID = props?.env?.account;
-        const REGION = props?.env?.region;
+    constructor(scope: Construct, id: string, props: RedshiftStackProps) {
+        super(scope, id, props);
 
         /** 
          * Redshift
          */
 
-        if (props?.redshiftNameSpaceId == undefined || props?.redshiftWorkSpace == undefined) {
+        if (props.redshiftNameSpaceId == undefined || props.redshiftWorkSpace == undefined) {
 
             console.log('Create new Redshift Namespace & workspace')
             /** 
@@ -94,7 +92,7 @@ export class RedshiftStack extends Stack {
             const REDSHIFT_DBNAME = "zeroetldb";
 
             const cfnNamespace = new redshiftserverless.CfnNamespace(this, 'RedshiftServerlesssNC', {
-                namespaceName: 'default2',
+                namespaceName: 'default',
 
                 // the properties below are optional
                 // adminPasswordSecretKmsKeyId: 'adminPasswordSecretKmsKeyId',
@@ -118,7 +116,7 @@ export class RedshiftStack extends Stack {
             console.log(vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnetIds)
 
             const cfnWorkgroup = new redshiftserverless.CfnWorkgroup(this, 'RedshiftWorkingGroup', {
-                workgroupName: 'redshift-zeroetl-test2',
+                workgroupName: 'redshift-zeroetl-test',
 
                 // the properties below are optional
                 baseCapacity: 8,
@@ -185,7 +183,11 @@ export class RedshiftStack extends Stack {
 
             ],
             resources: [
-                `arn:aws:redshift-serverless:${REGION}:${ACCOUNT_ID}:namespace/${this.redshiftNameSpaceId}/*`
+                this.formatArn({
+                    service: 'redshift-serverless',
+                    resource: 'namespace',
+                    resourceName: `${this.redshiftNameSpaceId}'/*'`
+                })
             ],
             effect: iam.Effect.ALLOW,
         }))
@@ -193,30 +195,26 @@ export class RedshiftStack extends Stack {
 
 
         // Define the resource policy
-        const resourcePolicy = {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": "redshift.amazonaws.com"
+        const resourcePolicy = new iam.PolicyDocument({
+            statements: [
+                new iam.PolicyStatement({
+                    principals: [
+                        new iam.ServicePrincipal("redshift.amazonaws.com"),
+                    ],
+                    actions: ["redshift:AuthorizeInboundIntegration"],
+                    conditions: {
+                        StringEquals: {
+                            "aws:SourceArn": props.dbCluster.clusterArn,
+                        },
                     },
-                    "Action": ["redshift:AuthorizeInboundIntegration"],
-                    "Condition": {
-                        "StringEquals": {
-                            "aws:SourceArn": props?.dbCluster.clusterArn
-                        }
-                    }
-                },
-                {
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": `arn:aws:iam::${ACCOUNT_ID}:root`
-                    },
-                    "Action": "redshift:CreateInboundIntegration"
-                }
-            ]
-        };
+                }),
+                new iam.PolicyStatement({
+                    principals: [new iam.AccountRootPrincipal()],
+                    actions: ["redshift:CreateInboundIntegration"],
+                }),
+            ],
+        });
+
 
         // Convert the policy to a JSON string
         const policyJson = JSON.stringify(resourcePolicy);
@@ -226,7 +224,11 @@ export class RedshiftStack extends Stack {
                 service: '@aws-sdk/client-redshift',
                 action: 'PutResourcePolicy',
                 parameters: {
-                    ResourceArn: `arn:aws:redshift-serverless:${REGION}:${ACCOUNT_ID}:namespace/${this.redshiftNameSpaceId}`,
+                    ResourceArn: this.formatArn({
+                        service: 'redshift-serverless',
+                        resource: 'namespace',
+                        resourceName: this.redshiftNameSpaceId
+                    }),
                     Policy: policyJson
                 },
                 physicalResourceId: cr.PhysicalResourceId.of(Date.now().toString()), // Update physical id to always fetch the latest version
