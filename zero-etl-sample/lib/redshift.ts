@@ -22,7 +22,7 @@ export class RedshiftStack extends Stack {
 
     constructor(scope: Construct, id: string, props: RedshiftStackProps) {
         super(scope, id, props);
-        
+
         /** 
          * Redshift
          */
@@ -92,7 +92,7 @@ export class RedshiftStack extends Stack {
             const REDSHIFT_DBNAME = "zeroetldb";
 
             const cfnNamespace = new redshiftserverless.CfnNamespace(this, 'RedshiftServerlesssNC', {
-                namespaceName: 'default2',
+                namespaceName: 'default',
 
                 // the properties below are optional
                 // adminPasswordSecretKmsKeyId: 'adminPasswordSecretKmsKeyId',
@@ -116,7 +116,7 @@ export class RedshiftStack extends Stack {
             console.log(vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnetIds)
 
             const cfnWorkgroup = new redshiftserverless.CfnWorkgroup(this, 'RedshiftWorkingGroup', {
-                workgroupName: 'redshift-zeroetl-test2',
+                workgroupName: 'redshift-zeroetl-test',
 
                 // the properties below are optional
                 baseCapacity: 8,
@@ -199,7 +199,7 @@ export class RedshiftStack extends Stack {
             statements: [
                 new iam.PolicyStatement({
                     principals: [
-                        new iam.ServicePrincipal("redshift:AuthorizeInboundIntegration"),
+                        new iam.ServicePrincipal("redshift.amazonaws.com"),
                     ],
                     actions: ["redshift:AuthorizeInboundIntegration"],
                     conditions: {
