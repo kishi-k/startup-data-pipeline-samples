@@ -84,15 +84,7 @@ export class ZeroETLRDSStack extends Stack {
             false
         );
 
-        const ec2Role = new iam.Role(this, `instance-role`, {
-            roleName: `ssm-ec2-instance-role`,
-            assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
-            managedPolicies: [
-                iam.ManagedPolicy.fromManagedPolicyArn(this, "AmazonEC2ContainerServiceforEC2Role", "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"),
-                iam.ManagedPolicy.fromManagedPolicyArn(this, "AmazonEC2RoleforSSM", "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"),
-                iam.ManagedPolicy.fromManagedPolicyArn(this, "AmazonSSMManagedInstanceCore", "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore")
-            ]
-        })
+        
 
         const userData = ec2.UserData.forLinux({ shebang: '#!/bin/bash' })
         userData.addCommands(
@@ -104,7 +96,7 @@ export class ZeroETLRDSStack extends Stack {
             vpc: vpc,
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.BURSTABLE2, ec2.InstanceSize.MICRO),
             machineImage: new ec2.AmazonLinuxImage({ generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2023 }),
-            role: ec2Role,
+            ssmSessionPermissions: true,
             securityGroup: accessRdsSecurityGroup,
             userData:userData
         });
